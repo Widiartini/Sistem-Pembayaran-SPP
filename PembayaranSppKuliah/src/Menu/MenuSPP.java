@@ -5,12 +5,27 @@
  */
 package Menu;
 import Formlogin.Login;
+import Data.DataMHS;
+import Data.DataStaff;
+import Data.DataTransaksi;
+import Data.GenerateTagihan;
+import Data.SetUKT;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import jxl.*;
+import jxl.write.*;
 /**
  *
  * @author Oka
  */
 public class MenuSPP extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form MenuSPP
      */
@@ -28,41 +43,154 @@ public class MenuSPP extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         logout = new javax.swing.JButton();
+        breport = new javax.swing.JButton();
+        bsett = new javax.swing.JButton();
+        bpembayaran = new javax.swing.JButton();
+        bdataStaff = new javax.swing.JButton();
+        bgenerate = new javax.swing.JButton();
+        bdataMHS = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        namapegawai = new javax.swing.JLabel();
+        nippegawai = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        id_pegawai = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
-        jLabel1.setText("Menu Pembayaran SPP");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(130, 10, 260, 70);
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(null);
 
+        logout.setBackground(new java.awt.Color(255, 255, 255));
+        logout.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        logout.setIcon(new javax.swing.ImageIcon("C:\\Users\\Oka\\Downloads\\icons8-exit-48j.png")); // NOI18N
         logout.setText("Log Out");
         logout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutActionPerformed(evt);
             }
         });
-        jPanel1.add(logout);
-        logout.setBounds(130, 220, 71, 23);
+        jPanel3.add(logout);
+        logout.setBounds(20, 310, 110, 40);
 
-        nama.setText("NAMA");
-        jPanel1.add(nama);
-        nama.setBounds(20, 90, 60, 20);
-        nama.getAccessibleContext().setAccessibleName("nama");
+        breport.setBackground(new java.awt.Color(255, 255, 255));
+        breport.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        breport.setForeground(new java.awt.Color(0, 51, 102));
+        breport.setIcon(new javax.swing.ImageIcon("C:\\Users\\Oka\\Downloads\\lap..png")); // NOI18N
+        breport.setText("REPORT");
+        breport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                breportActionPerformed(evt);
+            }
+        });
+        jPanel3.add(breport);
+        breport.setBounds(440, 100, 240, 80);
+
+        bsett.setBackground(new java.awt.Color(255, 255, 255));
+        bsett.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        bsett.setForeground(new java.awt.Color(0, 51, 102));
+        bsett.setIcon(new javax.swing.ImageIcon("C:\\Users\\Oka\\Downloads\\se..jpg")); // NOI18N
+        bsett.setText("SETTING UKT");
+        bsett.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bsettActionPerformed(evt);
+            }
+        });
+        jPanel3.add(bsett);
+        bsett.setBounds(440, 190, 240, 80);
+
+        bpembayaran.setBackground(new java.awt.Color(255, 255, 255));
+        bpembayaran.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        bpembayaran.setForeground(new java.awt.Color(0, 51, 102));
+        bpembayaran.setIcon(new javax.swing.ImageIcon("C:\\Users\\Oka\\Downloads\\bayar..png")); // NOI18N
+        bpembayaran.setText("PEMBAYARAN SPP");
+        bpembayaran.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bpembayaranActionPerformed(evt);
+            }
+        });
+        jPanel3.add(bpembayaran);
+        bpembayaran.setBounds(440, 280, 240, 80);
+
+        bdataStaff.setBackground(new java.awt.Color(255, 255, 255));
+        bdataStaff.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        bdataStaff.setForeground(new java.awt.Color(0, 51, 102));
+        bdataStaff.setIcon(new javax.swing.ImageIcon("C:\\Users\\Oka\\Downloads\\ad...png")); // NOI18N
+        bdataStaff.setText("DATA STAF");
+        bdataStaff.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bdataStaffActionPerformed(evt);
+            }
+        });
+        jPanel3.add(bdataStaff);
+        bdataStaff.setBounds(150, 100, 240, 80);
+
+        bgenerate.setBackground(new java.awt.Color(255, 255, 255));
+        bgenerate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        bgenerate.setForeground(new java.awt.Color(0, 51, 102));
+        bgenerate.setIcon(new javax.swing.ImageIcon("C:\\Users\\Oka\\Downloads\\gene..jpg")); // NOI18N
+        bgenerate.setText("GENERATE UKT");
+        bgenerate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bgenerateActionPerformed(evt);
+            }
+        });
+        jPanel3.add(bgenerate);
+        bgenerate.setBounds(150, 190, 240, 80);
+
+        bdataMHS.setBackground(new java.awt.Color(255, 255, 255));
+        bdataMHS.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        bdataMHS.setForeground(new java.awt.Color(0, 51, 102));
+        bdataMHS.setIcon(new javax.swing.ImageIcon("C:\\Users\\Oka\\Pictures\\mhs..png")); // NOI18N
+        bdataMHS.setText("DATA MAHASISWA");
+        bdataMHS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bdataMHSActionPerformed(evt);
+            }
+        });
+        jPanel3.add(bdataMHS);
+        bdataMHS.setBounds(150, 280, 243, 80);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 51, 102));
+        jLabel1.setText("PEMBAYARAN SPP UNIVERSITAS ");
+        jPanel3.add(jLabel1);
+        jLabel1.setBounds(190, 10, 360, 50);
+
+        namapegawai.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        namapegawai.setForeground(new java.awt.Color(0, 51, 102));
+        jPanel3.add(namapegawai);
+        namapegawai.setBounds(10, 90, 140, 30);
+
+        nippegawai.setForeground(new java.awt.Color(0, 51, 102));
+        jPanel3.add(nippegawai);
+        nippegawai.setBounds(10, 130, 150, 30);
+
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Oka\\Downloads\\u.png")); // NOI18N
+        jPanel3.add(jLabel3);
+        jLabel3.setBounds(0, 0, 710, 370);
+
+        id_pegawai.setText("jLabel2");
+        jPanel3.add(id_pegawai);
+        id_pegawai.setBounds(10, 250, 34, 14);
+
+        jPanel1.add(jPanel3);
+        jPanel3.setBounds(0, 0, 710, 380);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -73,6 +201,126 @@ public class MenuSPP extends javax.swing.JFrame {
         new Login().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_logoutActionPerformed
+
+    private void bdataStaffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bdataStaffActionPerformed
+        // TODO add your handling code here:
+        new DataStaff().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_bdataStaffActionPerformed
+
+    private void bdataMHSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bdataMHSActionPerformed
+        // TODO add your handling code here:
+        new DataMHS().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_bdataMHSActionPerformed
+
+    private void bpembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bpembayaranActionPerformed
+        // TODO add your handling code here:
+        DataTransaksi X = new DataTransaksi();
+        X.namaPetugas.setText(namapegawai.getText());
+        X.nipPetugas.setText(nippegawai.getText());
+        X.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_bpembayaranActionPerformed
+
+    private void bgenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bgenerateActionPerformed
+        // TODO add your handling code here:
+        new GenerateTagihan().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_bgenerateActionPerformed
+
+    private void bsettActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bsettActionPerformed
+        // TODO add your handling code here:
+        new SetUKT().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_bsettActionPerformed
+
+    private void breportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breportActionPerformed
+        // TODO add your handling code here:
+        try {
+            Workbook workbook = Workbook.getWorkbook(new File("F:\\Laporan\\data2.xls"));  
+            WritableWorkbook copy = Workbook.createWorkbook(new File("F:\\Laporan\\Laporan_mahasiswa.xls"), workbook);
+            WritableSheet sheet2 = copy.getSheet(0); 
+            WritableCell cell = sheet2.getWritableCell(2, 2); 
+                       
+            Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_login","root","");
+            Statement statement = koneksi.createStatement();
+            ResultSet res = statement.executeQuery("SELECT B.`nim`, B.`nama`, A.`tanggal`,  D.`nama_ukt`, D.`biaya`, A.`semester`, B.`jurusan`, E.`nama` AS namapegawai, A.`tahunajar`, A.`status` \n" +
+            "FROM `datatransaksi` A \n" +
+            "INNER JOIN `datamhs` B ON B.`id_data_mhs` = A.`data_mhs_id` \n" +
+            "INNER JOIN  `ukt` C ON A.`id_ukt` = C.`id_ukt` \n" +
+            "INNER JOIN  `master_ukt` D ON C.`id_master_ukt` = D.`id_master_ukt` \n" +
+            "LEFT JOIN `datastaff` E ON A.`data_pegawai_id` = E.`id_pegawai`;");
+
+            
+            int row,col;
+            // di exel (0,0) = A,1
+            col = 0 ; // berarti mulai dari kolom A
+            row = 4 ; // berarti mulai dari baris 5
+                   
+            while(res.next())
+            {  
+                String nim = res.getString(1);
+                Label label = new Label(col, row, nim); 
+                sheet2.addCell(label); 
+                
+                String nama = res.getString(2);
+                Label label2 = new Label(col+1, row, nama); 
+                sheet2.addCell(label2);
+                
+                String tanggal = res.getString(3);
+                Label label3 = new Label(col+2, row, tanggal); 
+                sheet2.addCell(label3);
+                
+                String ukt = res.getString(4);
+                Label label4 = new Label(col+3, row, ukt); 
+                sheet2.addCell(label4);
+                
+                String biaya = res.getString(5);
+                Label label5 = new Label(col+4, row, biaya); 
+                sheet2.addCell(label5);
+                
+                String semester = res.getString(6);
+                Label label6 = new Label(col+5, row, semester); 
+                sheet2.addCell(label6);
+                
+                String jurusan = res.getString(7);
+                Label label7 = new Label(col+6, row, jurusan); 
+                sheet2.addCell(label7);
+                
+                String tahun = res.getString(9);
+                Label label8 = new Label(col+7, row, tahun); 
+                sheet2.addCell(label8);
+                
+                String status = res.getString(10);
+                Label label9 = new Label(col+8, row, status); 
+                sheet2.addCell(label9);
+                
+                row++;
+            }
+
+            statement.close();
+            koneksi.close();
+            copy.write(); 
+            copy.close();
+            workbook.close();
+            JOptionPane.showMessageDialog(rootPane, "Laporan Berhasil");
+            
+            //tampilkan laporan
+            try
+            {
+                Desktop.getDesktop().open(new File("F:\\Laporan\\Laporan_mahasiswa.xls"));
+                //String fileName = "F:\\Laporan\\Laporan_mahasiswa.xls";
+                //String[] commands = {"cmd", "/d", "start", "\"DummyTitle\"",fileName};
+                //Runtime.getRuntime().exec(commands);
+            } catch(IOException ie){
+                JOptionPane.showMessageDialog(rootPane, "Terjadi Kesalahanmembuka excel"+ie);
+            } 
+            
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(rootPane, "Terjadi Kesalahan! di :"+e);
+        }
+    }//GEN-LAST:event_breportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -110,9 +358,19 @@ public class MenuSPP extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bdataMHS;
+    private javax.swing.JButton bdataStaff;
+    private javax.swing.JButton bgenerate;
+    private javax.swing.JButton bpembayaran;
+    private javax.swing.JButton breport;
+    private javax.swing.JButton bsett;
+    public javax.swing.JLabel id_pegawai;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JButton logout;
-    public static final javax.swing.JLabel nama = new javax.swing.JLabel();
+    public javax.swing.JLabel namapegawai;
+    public javax.swing.JLabel nippegawai;
     // End of variables declaration//GEN-END:variables
 }

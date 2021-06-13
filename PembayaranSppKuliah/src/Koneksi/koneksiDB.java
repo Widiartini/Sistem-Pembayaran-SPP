@@ -13,7 +13,7 @@ import java.sql.SQLException;
  */
 public class koneksiDB {
     private static Connection MySQLConfig;
-    
+    public static Object getConnection;
     public static Connection configDB()throws SQLException{
         try{
             String url = "jdbc:mysql://localhost:3306/db_login";
@@ -29,5 +29,9 @@ public class koneksiDB {
             
         }
         return MySQLConfig;
+    }
+
+    public static Object getConnection() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
